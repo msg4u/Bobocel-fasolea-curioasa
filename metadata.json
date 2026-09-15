@@ -1,0 +1,6 @@
+{
+  "name": "Bobocel - Fasolea Care Voia Să Vadă Lumea",
+  "description": "Aplicație educativă și interactivă pentru copii: povestea lui Bobocel, simulatorul borcanului de germinare, jurnalul micului grădinar și experimente științifice haioase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

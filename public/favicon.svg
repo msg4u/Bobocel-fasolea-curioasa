@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <radialGradient id="fGlow" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stopColor="#fffb7a" />
+      <stop offset="45%" stopColor="#ffeb3b" />
+      <stop offset="85%" stopColor="#fbc02d" />
+      <stop offset="100%" stopColor="#f57f17" />
+    </radialGradient>
+  </defs>
+
+  <!-- Sprout on Head -->
+  <path d="M28 24 Q26 17 30 13" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" />
+  <path d="M29 13 C20 7, 12 11, 13 19 C18 24, 26 20, 29 13 Z" fill="#22c55e" stroke="#0f172a" stroke-width="1.2" />
+  <path d="M30 13 C33 4, 43 5, 46 12 C46 19, 38 21, 30 13 Z" fill="#16a34a" stroke="#0f172a" stroke-width="1.2" />
+
+  <!-- Kidney Bean Body -->
+  <path
+    d="M27 21
+       C37 22, 49 31, 54 40
+       C59 48, 65 49, 74 51
+       C87 54, 94 66, 89 78
+       C84 90, 67 93, 51 89
+       C34 85, 18 75, 12 58
+       C6 40, 15 21, 27 21 Z"
+    fill="url(#fGlow)"
+    stroke="#0f172a"
+    stroke-width="2.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Waist Creases -->
+  <path d="M48 41 Q52 44 57 42" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" fill="none" />
+  <path d="M45 46 Q51 50 57 48" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" fill="none" />
+
+  <!-- Eyes with eyelashes and green iris -->
+  <!-- Left Eye -->
+  <path d="M18 39 L15 36" stroke="#0f172a" stroke-width="1.2" stroke-linecap="round" />
+  <path d="M20 38 L18 34" stroke="#0f172a" stroke-width="1.2" stroke-linecap="round" />
+  <circle cx="23" cy="42" r="5" fill="#ffffff" stroke="#0f172a" stroke-width="1.5" />
+  <circle cx="23.5" cy="42" r="3.5" fill="#10b981" />
+  <circle cx="23.5" cy="42" r="2.2" fill="#0f172a" />
+  <circle cx="22" cy="41" r="1" fill="#ffffff" />
+
+  <!-- Right Eye -->
+  <path d="M33 36 L31 32" stroke="#0f172a" stroke-width="1.2" stroke-linecap="round" />
+  <path d="M35 36 L34 31" stroke="#0f172a" stroke-width="1.2" stroke-linecap="round" />
+  <circle cx="35" cy="39" r="4.5" fill="#ffffff" stroke="#0f172a" stroke-width="1.5" />
+  <circle cx="35.2" cy="39" r="3.1" fill="#10b981" />
+  <circle cx="35.2" cy="39" r="2" fill="#0f172a" />
+  <circle cx="34" cy="38" r="0.9" fill="#ffffff" />
+
+  <!-- Freckles -->
+  <circle cx="18" cy="50" r="0.7" fill="#92400e" />
+  <circle cx="21" cy="52" r="0.7" fill="#92400e" />
+  <circle cx="35" cy="48" r="0.7" fill="#92400e" />
+
+  <!-- Cheerful Smile with tongue -->
+  <path d="M24 52 Q32 47 38 51 C39 58, 28 61, 24 52 Z" fill="#0f172a" stroke="#0f172a" stroke-width="1.5" stroke-linejoin="round" />
+  <path d="M28 57 Q32 54 36 55 C35 59, 29 59, 28 57 Z" fill="#f43f5e" />
+</svg>
