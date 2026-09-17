@@ -33,7 +33,7 @@ export default function App() {
   const handleTickleMascot = () => {
     soundEngine.playGiggle();
     setShowTickleToast(true);
-    speakRomanian('Hihihi! Mă gâdili la burtică! Mulțumesc că ai grijă de mine!');
+    speakRomanian('Hihihi! Mă gâdili la burtică! Mulțumesc că ai grijă de mine!', undefined, 'tickle');
     setTimeout(() => {
       setShowTickleToast(false);
     }, 2500);

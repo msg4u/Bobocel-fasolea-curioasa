@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { STORY_PAGES } from '../data/storyData';
 import { soundEngine, speakRomanian, stopSpeaking } from '../utils/audio';
 import { ChevronLeft, ChevronRight, Volume2, Sparkles, Lightbulb, MessageCircle } from 'lucide-react';
@@ -15,6 +15,15 @@ export function StoryView({ onGoToSimulator }: StoryViewProps) {
   const [bobocelTickled, setBobocelTickled] = useState(false);
 
   const page = STORY_PAGES[currentPageIndex];
+
+  // Stop any active audio when switching story pages or unmounting
+  useEffect(() => {
+    stopSpeaking();
+    setIsSpeaking(false);
+    return () => {
+      stopSpeaking();
+    };
+  }, [currentPageIndex]);
 
   const handleNext = () => {
     stopSpeaking();
@@ -50,9 +59,13 @@ export function StoryView({ onGoToSimulator }: StoryViewProps) {
 
     setIsSpeaking(true);
     const fullText = `${page.title}. ${page.storyText} ${page.dialogueQuote || ''}`;
-    speakRomanian(fullText, () => {
-      setIsSpeaking(false);
-    });
+    speakRomanian(
+      fullText,
+      () => {
+        setIsSpeaking(false);
+      },
+      `story_${page.id}`
+    );
   };
 
   const handleTickleBobocel = () => {

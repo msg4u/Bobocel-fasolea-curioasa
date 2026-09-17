@@ -28,15 +28,9 @@ export function JarSimulator({ currentDay, onSelectDay, gardenerName }: JarSimul
     soundEngine.playWaterDrop();
     setIsWatering(true);
     setWaterLevel((prev) => Math.min(100, prev + 15));
-
-    const waterQuotes = [
-      'Plic-ploc! Mmm, ce răcoros și gustos e prosopelul!',
-      'Gâdili-gâdili! Apa rece îmi gâdilă burtica!',
-      'Mulțumesc, dragă grădinar! Prosopelul meu e moale și proaspăt!',
-      'Ooo, o băiță minunată! Coaja mea zâmbește!'
-    ];
-    const randomQuote = waterQuotes[Math.floor(Math.random() * waterQuotes.length)];
-    setBubbleMessage(randomQuote);
+    const msg = 'Plop-plop! Ai adăugat stropi proaspeți de apă! Prosopelul e bine umezit!';
+    setBubbleMessage(msg);
+    speakRomanian(msg, undefined, 'action_water');
 
     setTimeout(() => {
       setIsWatering(false);
@@ -45,16 +39,16 @@ export function JarSimulator({ currentDay, onSelectDay, gardenerName }: JarSimul
 
   const handleSunToggle = () => {
     soundEngine.playSunChime();
+    const msg = 'Soarele călduț strălucește frumos! Bobocel zâmbește bucuros spre lumină!';
     if (sunlight === 'shade') {
       setSunlight('normal');
-      setBubbleMessage('A apărut puțină lumină! Tulpinița mea întinde gâtul!');
     } else if (sunlight === 'normal') {
       setSunlight('bright');
-      setBubbleMessage('Ce soare auriu și cald! Frunzele mele fac fotosinteză fericite!');
     } else {
       setSunlight('shade');
-      setBubbleMessage('E cam întuneric aici... unde a fugit domnul Soare?');
     }
+    setBubbleMessage(msg);
+    speakRomanian(msg, undefined, 'action_sun');
   };
 
   const handleBeanClick = (index: number) => {
@@ -64,7 +58,7 @@ export function JarSimulator({ currentDay, onSelectDay, gardenerName }: JarSimul
 
     if (index === 0) {
       setBubbleMessage(currentStageDetail.bobocelSpeech);
-      speakRomanian(currentStageDetail.bobocelSpeech);
+      speakRomanian(currentStageDetail.bobocelSpeech, undefined, `stage_${currentDay}`);
     } else {
       const messages = [
         `Eu sunt ${bean.name}! ${bean.personality}!`,
@@ -214,7 +208,7 @@ export function JarSimulator({ currentDay, onSelectDay, gardenerName }: JarSimul
               </p>
             </div>
             <button
-              onClick={() => speakRomanian(bubbleMessage)}
+              onClick={() => speakRomanian(bubbleMessage, undefined, selectedBeanIndex === 0 ? `stage_${currentDay}` : undefined)}
               className="text-stone-400 hover:text-emerald-700 p-1"
               title="Ascultă ce spune"
             >

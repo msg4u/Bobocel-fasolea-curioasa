@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CRAFT_MATERIALS, CRAFT_STEPS } from '../data/guideData';
-import { soundEngine } from '../utils/audio';
-import { CheckCircle, Circle, Scissors, Sparkles, Printer, Check, Info } from 'lucide-react';
+import { soundEngine, speakRomanian, stopSpeaking } from '../utils/audio';
+import { CheckCircle, Circle, Scissors, Sparkles, Printer, Check, Info, Volume2, VolumeX } from 'lucide-react';
 import { BobocelAvatar } from './BobocelAvatar';
 import confetti from 'canvas-confetti';
 
@@ -14,6 +14,7 @@ export function CraftGuide({ gardenerName }: CraftGuideProps) {
   const [activeStep, setActiveStep] = useState<number>(1);
   const [completedSteps, setCompletedSteps] = useState<Record<number, boolean>>({});
   const [labelSticker, setLabelSticker] = useState<string>('🌱');
+  const [isReadingStep, setIsReadingStep] = useState<boolean>(false);
 
   const toggleMaterial = (id: string) => {
     soundEngine.playPop();
@@ -191,23 +192,47 @@ export function CraftGuide({ gardenerName }: CraftGuideProps) {
               <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-900 font-black text-xs uppercase">
                 Pasul {currentStep.number} din 6
               </span>
-              <button
-                onClick={() => toggleStep(currentStep.number)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${
-                  completedSteps[currentStep.number]
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-stone-100 hover:bg-emerald-50 text-stone-700 border border-stone-200'
-                }`}
-              >
-                {completedSteps[currentStep.number] ? (
-                  <>
-                    <Check className="w-4 h-4" />
-                    <span>Finalizat! 🎉</span>
-                  </>
-                ) : (
-                  <span>Marchează ca gata</span>
-                )}
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    if (isReadingStep) {
+                      stopSpeaking();
+                      setIsReadingStep(false);
+                    } else {
+                      setIsReadingStep(true);
+                      const textToRead = `Pasul ${currentStep.number}: ${currentStep.title}. ${currentStep.detailedText}. Secretul Grădinarului: ${currentStep.funTip}`;
+                      speakRomanian(textToRead, () => setIsReadingStep(false));
+                    }
+                  }}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer ${
+                    isReadingStep
+                      ? 'bg-purple-600 text-white animate-pulse'
+                      : 'bg-purple-100 hover:bg-purple-200 text-purple-900'
+                  }`}
+                  title={isReadingStep ? 'Oprește lectura' : 'Ascultă pasul cu vocea caldă'}
+                >
+                  {isReadingStep ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-purple-700" />}
+                  <span>{isReadingStep ? 'Oprește' : 'Ascultă'}</span>
+                </button>
+
+                <button
+                  onClick={() => toggleStep(currentStep.number)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer ${
+                    completedSteps[currentStep.number]
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-stone-100 hover:bg-emerald-50 text-stone-700 border border-stone-200'
+                  }`}
+                >
+                  {completedSteps[currentStep.number] ? (
+                    <>
+                      <Check className="w-4 h-4" />
+                      <span>Finalizat! 🎉</span>
+                    </>
+                  ) : (
+                    <span>Marchează gata</span>
+                  )}
+                </button>
+              </div>
             </div>
 
             <h3 className="font-heading text-xl sm:text-2xl font-black text-purple-950">

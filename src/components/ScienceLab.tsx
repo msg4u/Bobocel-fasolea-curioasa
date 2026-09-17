@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { GUIDED_QUESTIONS } from '../data/guideData';
-import { soundEngine, speakRomanian } from '../utils/audio';
-import { Sparkles, Sun, Moon, HelpCircle, CheckCircle2, ChevronDown, ChevronUp, Award } from 'lucide-react';
+import { soundEngine, speakRomanian, stopSpeaking } from '../utils/audio';
+import { Sparkles, Sun, Moon, HelpCircle, CheckCircle2, ChevronDown, ChevronUp, Award, Volume2, VolumeX } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export function ScienceLab() {
   const [expandedQuestionId, setExpandedQuestionId] = useState<string | null>('q1');
+  const [activeListeningQuestionId, setActiveListeningQuestionId] = useState<string | null>(null);
   const [controlGroupView, setControlGroupView] = useState<'light' | 'dark' | 'compare'>('compare');
   const [quizScore, setQuizScore] = useState<number>(0);
   const [answeredQuestions, setAnsweredQuestions] = useState<Record<number, boolean>>({});
@@ -240,11 +241,38 @@ export function ScienceLab() {
                       </p>
                     </div>
                   </div>
-                  {isExpanded ? (
-                    <ChevronUp className="w-5 h-5 text-purple-600 shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-stone-400 shrink-0" />
-                  )}
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (activeListeningQuestionId === q.id) {
+                          stopSpeaking();
+                          setActiveListeningQuestionId(null);
+                        } else {
+                          setActiveListeningQuestionId(q.id);
+                          const text = `${q.question}. ${q.answerHint}`;
+                          speakRomanian(text, () => setActiveListeningQuestionId(null));
+                        }
+                      }}
+                      className={`p-1.5 rounded-xl transition-all cursor-pointer ${
+                        activeListeningQuestionId === q.id
+                          ? 'bg-purple-600 text-white animate-pulse'
+                          : 'bg-purple-100 hover:bg-purple-200 text-purple-800'
+                      }`}
+                      title={activeListeningQuestionId === q.id ? 'Oprește vocea' : 'Ascultă întrebarea și răspunsul'}
+                    >
+                      {activeListeningQuestionId === q.id ? (
+                        <VolumeX className="w-4 h-4" />
+                      ) : (
+                        <Volume2 className="w-4 h-4" />
+                      )}
+                    </button>
+                    {isExpanded ? (
+                      <ChevronUp className="w-5 h-5 text-purple-600 shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-stone-400 shrink-0" />
+                    )}
+                  </div>
                 </button>
 
                 {isExpanded && (
